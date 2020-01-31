@@ -188,9 +188,9 @@ def linode(key, domain):
     domain_id = next(x['id'] for x in info['data'] if x['domain'] == top_domain)
     logging.info('linode domain=%r to ip=%r domain_id: %s', domain, ip, domain_id)
     _, _, info = _request('GET', 'https://api.linode.com/v4/domains/%s/records' % domain_id, headers=headers, return_json=True)
-    record_id = next(x['id'] for x in info['data'] if x['name'] == domain)
+    record_id = next(x['id'] for x in info['data'] if x['name'] == record_name)
     logging.info('linode domain=%r to ip=%r record_id: %s', domain, ip, record_id)
-    _, _, info = _request('PUT', 'https://api.linode.com/v4/domains/%s/records/%s' % (domain_id, record_id), headers=headers, json={'name': domain, 'target': ip})
+    _, _, info = _request('PUT', 'https://api.linode.com/v4/domains/%s/records/%s' % (domain_id, record_id), headers=headers, json={'target': ip})
     logging.info('linode domain=%r to ip=%r result: %s', domain, ip, info)
 
 
